@@ -6,14 +6,13 @@ package main
  */
 
 import (
-	"fmt"
 	"time"
 
-	"github.com/sjwhitworth/golearn/base"
+	/*"github.com/sjwhitworth/golearn/base"
 
 	"github.com/sjwhitworth/golearn/evaluation"
 
-	"github.com/sjwhitworth/golearn/knn"
+	"github.com/sjwhitworth/golearn/knn"*/
 
 	"github.com/Arturo0911/NN/nn"
 )
@@ -32,9 +31,9 @@ type BehaviorClouds struct {
 
 func main() {
 
-	nn.Greeting()
+	nn.LoadFile("../practices/netflix_titles.csv")
 
-	// Load in a dataset, with headers. Header attributes will be stored.
+	/*// Load in a dataset, with headers. Header attributes will be stored.
 	// Think of instances as a Data Frame structure in R or Pandas.
 	// You can also create instances from scratch.
 	rawData, err := base.ParseCSVToInstances("../datasets/iris.csv", false)
@@ -63,5 +62,5 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("Unable to get confusion matrix: %s", err.Error()))
 	}
-	fmt.Println(evaluation.GetSummary(confusionMat))
+	fmt.Println(evaluation.GetSummary(confusionMat))*/
 }

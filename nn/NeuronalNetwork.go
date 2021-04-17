@@ -1,6 +1,27 @@
 package nn
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+)
+
+/*type Slice struct {
+	Id        int
+	attribute string
+}*/
+
+func LoadFile(pathName string) {
+
+	fileReader, err := ioutil.ReadFile(pathName)
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(string(fileReader))
+	//fmt.Println(reflect.ValueOf(fileReader).Kind())
+
+}
 
 func GradientDescent() int {
 	return 0
