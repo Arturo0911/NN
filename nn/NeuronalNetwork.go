@@ -1,8 +1,10 @@
 package nn
 
 import (
+	"bufio"
 	"fmt"
 	"io/ioutil"
+	"os"
 )
 
 /*type Slice struct {
@@ -20,6 +22,33 @@ func LoadFile(pathName string) {
 
 	fmt.Println(string(fileReader))
 	//fmt.Println(reflect.ValueOf(fileReader).Kind())
+
+}
+
+func LoopFile(fileName string) ([]string, error) {
+
+	var lines []string
+	file, err := os.Open(fileName)
+
+	if err != nil {
+
+		return nil, err
+	}
+
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		lines = append(lines, line)
+	}
+
+	err = file.Close()
+
+	if scanner.Err() != nil {
+		return nil, scanner.Err()
+	}
+
+	return lines, err
 
 }
 

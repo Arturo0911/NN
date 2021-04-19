@@ -6,6 +6,7 @@ package main
  */
 
 import (
+	"fmt"
 	"time"
 
 	/*"github.com/sjwhitworth/golearn/base"
@@ -31,7 +32,17 @@ type BehaviorClouds struct {
 
 func main() {
 
-	nn.LoadFile("../practices/netflix_titles.csv")
+	//nn.LoadFile("../practices/netflix_titles.csv")
+	nn.Greeting()
+
+	stringData, err := nn.LoopFile("../datasets/iris.csv")
+
+	if err != nil {
+
+		panic(err)
+	}
+
+	fmt.Println(stringData)
 
 	/*// Load in a dataset, with headers. Header attributes will be stored.
 	// Think of instances as a Data Frame structure in R or Pandas.
