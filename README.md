@@ -1,7 +1,7 @@
 Neuronal Network
 =======
 
-<img src="http://golang.network/images/gonn-final.png" width=125><br>
+<img src="https://miro.medium.com/max/2310/1*Z5FdBMXzl5PGHt8AVfslcw.gif" width=350><br>
 [![Go Reference](https://pkg.go.dev/badge/github.com/sjwhitworth/golearn.svg)](https://pkg.go.dev/github.com/sjwhitworth/golearn)
 
 
