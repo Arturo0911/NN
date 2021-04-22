@@ -65,11 +65,52 @@ func LoadData(pathFile string) {
 
 }
 
+func HeartAttackPrediction(pathFile string) {
+
+	rawData, err := base.ParseCSVToInstances(pathFile, true)
+
+	if err != nil {
+
+		fmt.Println("error by: ", err)
+	}
+
+	// Crate one classificator
+
+	classification := knn.NewKnnClassifier("euclidean", "linear", 2)
+
+	//fmt.Println(classification.NearestNeighbours)
+	//fmt.Println(rawData)
+
+	dataTrain, dataTest := base.InstancesTrainTestSplit(rawData, 0.50)
+
+	classification.Fit(dataTrain)
+
+	// making predictions
+
+	fmt.Println(dataTest)
+	time.Sleep(2 * time.Second)
+	predictions, err := classification.Predict(dataTest)
+
+	if err != nil {
+		panic(err)
+	}
+
+	mathConfussion, err := evaluation.GetConfusionMatrix(dataTest, predictions)
+
+	if err != nil {
+		fmt.Sprintln("Error by: ", err)
+	}
+
+	fmt.Println(evaluation.GetSummary(mathConfussion))
+
+}
+
 func main() {
 
 	//nn.LoadFile("../practices/netflix_titles.csv")
-	pathFile := "../datasets/iris.csv"
-
-	LoadData(pathFile)
+	//pathFile := "../datasets/iris.csv"
+	pathFile := "../practices/heart.csv"
+	HeartAttackPrediction(pathFile)
+	//LoadData(pathFile)
 
 }

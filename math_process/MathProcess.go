@@ -5,30 +5,45 @@ import (
 	"math"
 )
 
-func MakeStatisticsMethods(values []float64) (float64, float64, float64) {
+type StatisticsParameters struct {
+	//Covariance             float64
+	StandardDesviation float64
+	Average            float64
+	Variance           float64
+	//CorrelationCoefficient float64
+	//ProcessErorr error
+}
+
+func MakeStatisticsMethods(values []float64) StatisticsParameters {
+
+	statistics := StatisticsParameters{
+		StandardDesviation: 0,
+		Average:            0,
+		Variance:           0,
+		//ProcessErorr:       nil,
+	}
 
 	var sumTot float64 = 0
-	var average float64 = 0
-	var variance float64 = 0
-	var standardDeviation float64 = 0
+	//var average float64 = 0
+	//var variance float64 = 0
+	//var standardDeviation float64 = 0
 	for _, value := range values {
 
 		sumTot += value
 	}
 
-	average = float64(sumTot) / float64(len(values))
+	statistics.Average = float64(sumTot) / float64(len(values))
 
 	for _, element := range values {
 
-		variance += math.Pow((element - average), 2)
+		statistics.Average += math.Pow((element - statistics.Average), 2)
 
 	}
 
-	variance = (variance / float64(len(values)-1))
-	standardDeviation = math.Sqrt(variance)
+	statistics.Variance = (statistics.Variance / float64(len(values)-1))
+	statistics.StandardDesviation = math.Sqrt(statistics.Variance)
 
-	return variance, standardDeviation, average
-
+	return statistics
 }
 
 func MakeCovariance(X []float64, Y []float64) (float64, float64, error) {
