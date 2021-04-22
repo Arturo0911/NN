@@ -10,7 +10,7 @@ func MakeStatisticsMethods(values []float64) (float64, float64, float64) {
 	var sumTot float64 = 0
 	var average float64 = 0
 	var variance float64 = 0
-	var standarDesviation float64 = 0
+	var standardDeviation float64 = 0
 	for _, value := range values {
 
 		sumTot += value
@@ -25,9 +25,9 @@ func MakeStatisticsMethods(values []float64) (float64, float64, float64) {
 	}
 
 	variance = (variance / float64(len(values)-1))
-	standarDesviation = math.Sqrt(variance)
+	standardDeviation = math.Sqrt(variance)
 
-	return variance, standarDesviation, average
+	return variance, standardDeviation, average
 
 }
 
@@ -40,7 +40,7 @@ func MakeCovariance(X []float64, Y []float64) (float64, float64, error) {
 	var covariance float64 = 0
 	var Sx float64 = 0
 	var Sy float64 = 0
-	var corrCoeff float64 = 0
+	var correlationCoefficient float64 = 0
 
 	if len(X) != len(Y) {
 		return 0, 0, errors.New("the size of ranges cannot be different")
@@ -78,8 +78,8 @@ func MakeCovariance(X []float64, Y []float64) (float64, float64, error) {
 
 	covariance = covariance / float64(len(X)-1)
 
-	corrCoeff = covariance / (Sx * Sy)
+	correlationCoefficient = covariance / (Sx * Sy)
 
-	return covariance, corrCoeff, nil
+	return covariance, correlationCoefficient, nil
 
 }
