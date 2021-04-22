@@ -18,7 +18,7 @@ import (
 	"github.com/Arturo0911/NN/nn"
 )
 
-type BehaviorClouds struct {
+type FeaturesClouds struct {
 	TimeStart          time.Time
 	TimeEnd            time.Time
 	CloudDescription   string
