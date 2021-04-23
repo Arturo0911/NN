@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/csv"
-	"fmt"
 	"os"
 	"strconv"
 
@@ -102,7 +101,8 @@ func readCSVFile(pathFile string) {
 
 	fmt.Println(statistics)*/
 	statistics.MakeCovariance(chestPain, hearRate)
-	fmt.Println(statistics)
+	//fmt.Println(statistics)
+	statistics.PresentingStatisticModel()
 }
 
 func main() {
