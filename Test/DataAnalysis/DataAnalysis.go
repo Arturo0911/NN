@@ -83,7 +83,8 @@ func readCSVFile(pathFile string) {
 		//fmt.Printf("%.3f percent\n", float64((womens/(mens+womens))*100))
 	}
 
-	fmt.Println("")
+	fmt.Println(statistics)
+	fmt.Println()
 
 	for _, element := range records {
 

@@ -24,15 +24,15 @@ type MathModel interface {
 }
 
 type StatisticsParameters struct {
-	StandardDesviation     float64
-	CorrelationCoefficient float64
+	StandardDesviation     float64 // Standard desviation general
+	CorrelationCoefficient float64 // Metric of how much it's correlationship betweem two variables
 	Average                float64
-	Variance               float64
-	Sx                     float64
-	Sy                     float64
-	BetaOne                float64
-	BetaZero               float64
-	Bias                   float64
+	Variance               float64 // Variance General
+	Sx                     float64 // standard desviations of X
+	Sy                     float64 // Standard desviations of Y
+	BetaOne                float64 // The first parameter of math model
+	BetaZero               float64 // The second parameter
+	Bias                   float64 // desviation
 }
 
 type NeuronalNetwork struct {
