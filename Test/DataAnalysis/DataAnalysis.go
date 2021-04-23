@@ -23,17 +23,14 @@ func readCSVFile(pathFile string) {
 	records, _ := reader.ReadAll()
 	newArray := make([]float64, 0)
 
-	for i := 0; i < len(records); i++ {
+	for i := 1; i < len(records); i++ {
 		// get the ages to set context
-		if i > 0 {
+		value, err := strconv.ParseFloat(records[i][0], 64)
 
-			value, err := strconv.ParseFloat(records[i][0], 64)
-
-			if err != nil {
-				break
-			}
-			newArray = append(newArray, value)
+		if err != nil {
+			break
 		}
+		newArray = append(newArray, value)
 
 	}
 

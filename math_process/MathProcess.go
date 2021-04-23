@@ -2,7 +2,10 @@ package math_process
 
 import (
 	"errors"
+	"fmt"
+	"log"
 	"math"
+	"strconv"
 )
 
 // Body of parameters
@@ -17,11 +20,34 @@ import (
 // Y88b  d88PY88b. 888  888Y88b. 888     X88Y88b. 888Y88b.        X88888       888  888888    888  888  888Y8b.    Y88b. Y8b.    888         X88
 // "Y8888P"  "Y888"Y888888 "Y888888 88888P' "Y888888 "Y8888P 88888P'888       "Y888888888    888  888  888 "Y8888  "Y888 "Y8888 888     88888P'
 
-type StatisticsParameters struct {
-	StandardDesviation float64
-	Average            float64
-	Variance           float64
+type MathModel struct {
+	BetaOne  float64
+	BetaZero float64
+	Bias     float64
 }
+
+type StatisticsParameters struct {
+	StandardDesviation     float64
+	CorrelationCoefficient float64
+	Average                float64
+	Variance               float64
+}
+
+type NeuronalNetwork struct {
+	Prediction float64
+	XDataTrain []float64
+	YDataTrain []float64
+	XDataTest  []float64
+	YDataTest  []float64
+}
+
+/*
+func NewStatisticsBody() *StatisticsParameters{}
+	statistics := StatisticsParameters {}
+
+	statistics.Average = 0
+
+*/
 
 func MakeStatisticsMethods(values []float64) *StatisticsParameters {
 
@@ -57,10 +83,26 @@ func MakeStatisticsMethods(values []float64) *StatisticsParameters {
 	variance = (variance / float64(len(values)-1))
 	standardDeviation = math.Sqrt(variance)
 
+	_average, err := strconv.ParseFloat(fmt.Sprintf("%.3f", average), 64)
+	if err != nil {
+
+		log.Fatal(err)
+	}
+	_variance, err := strconv.ParseFloat(fmt.Sprintf("%.3f", variance), 64)
+	if err != nil {
+
+		log.Fatal(err)
+	}
+	_standard, err := strconv.ParseFloat(fmt.Sprintf("%.3f", standardDeviation), 64)
+	if err != nil {
+
+		log.Fatal(err)
+	}
+
 	return &StatisticsParameters{
-		Average:            average,
-		Variance:           variance,
-		StandardDesviation: standardDeviation,
+		Average:            _average,
+		Variance:           _variance,
+		StandardDesviation: _standard,
 	}
 }
 
