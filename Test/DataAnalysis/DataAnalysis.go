@@ -76,7 +76,7 @@ func readCSVFile(pathFile string) {
 	}
 
 	statistics := math_process.MakeStatisticsMethods(newArray)
-	var percent float64 = 0
+	/*var percent float64 = 0
 	fmt.Println(statistics.Average)
 
 	if mens >= womens {
@@ -89,7 +89,7 @@ func readCSVFile(pathFile string) {
 		percent = float64(womens * 100 / (mens + womens))
 		fmt.Printf("%.2f percent\n", percent)
 		//fmt.Printf("%.3f percent\n", float64((womens/(mens+womens))*100))
-	}
+	}*/
 
 	fmt.Println("==================================")
 
