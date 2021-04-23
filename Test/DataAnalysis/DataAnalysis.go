@@ -86,7 +86,7 @@ func readCSVFile(pathFile string) {
 	fmt.Println(statistics)
 	fmt.Println()
 
-	for _, element := range records {
+	/*for _, element := range records {
 
 		value, _ := strconv.Atoi(element[1])
 		sex, _ := strconv.Atoi(element[0])
@@ -95,7 +95,7 @@ func readCSVFile(pathFile string) {
 			fmt.Println(element[9])
 		}
 
-	}
+	}*/
 
 	//fmt.Printf("variance %.2f standard desviation %.2f  and average %.2f\n", statistics.MakeStatisticsMethods(newArray), statistics.StandardDesviation, statistics.Average)
 
