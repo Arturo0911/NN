@@ -170,15 +170,15 @@ func (s *StatisticsParameters) InitTest(paramTrain float64) float64 {
 
 func (s *StatisticsParameters) PresentingStatisticModel() {
 
-	fmt.Println("Average: ", s.Average)
-	fmt.Println("Beta one: ", s.BetaOne)
-	fmt.Println("Beta Zero: ", s.BetaZero)
-	fmt.Println("Bias: ", s.Bias)
-	fmt.Println("Correlation coefficient: ", s.CorrelationCoefficient)
-	fmt.Println("Covariance: ", s.Covariance)
-	fmt.Println("Standard desviation: ", s.StandardDesviation)
-	fmt.Println("X variance: ", s.Sx)
-	fmt.Println("Y variance: ", s.Sy)
-	fmt.Println("General Variance: ", s.Variance)
+	fmt.Println("\n	Average: ", s.Average)
+	fmt.Println("	Beta one: ", s.BetaOne)
+	fmt.Println("	Beta Zero: ", s.BetaZero)
+	fmt.Println("	Bias: ", s.Bias)
+	fmt.Println("	Correlation coefficient: ", s.CorrelationCoefficient)
+	fmt.Println("	Covariance: ", s.Covariance)
+	fmt.Println("	Standard desviation: ", s.StandardDesviation)
+	fmt.Println("	X variance: ", s.Sx)
+	fmt.Println("	Y variance: ", s.Sy)
+	fmt.Println("	General Variance: ", s.Variance)
 
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/csv"
+	"fmt"
 	"os"
 	"strconv"
 
@@ -39,10 +40,10 @@ func readCSVFile(pathFile string) {
 	reader := csv.NewReader(file)
 
 	records, _ := reader.ReadAll()
-	newArray := make([]float64, 0)
+	ageArray := make([]float64, 0)
 
 	chestPain := make([]float64, 0)
-	hearRate := make([]float64, 0)
+	//hearRate := make([]float64, 0)
 
 	mens := 0
 	womens := 0
@@ -54,55 +55,43 @@ func readCSVFile(pathFile string) {
 		if err != nil {
 			continue
 		}
-		newArray = append(newArray, value)
+		ageArray = append(ageArray, value)
 
-		gender, err := strconv.Atoi(records[i][1])
-		cp, _ := strconv.ParseFloat(records[i][2], 64)
-		tl, _ := strconv.ParseFloat(records[i][4], 64)
+		cp, _ := strconv.ParseFloat(records[i][7], 64)
+		//tl, _ := strconv.ParseFloat(records[i][4], 64)
 
 		chestPain = append(chestPain, cp)
-		hearRate = append(hearRate, tl)
+		//hearRate = append(hearRate, tl)
 
 		if err != nil {
 			continue
 		}
-		if gender == 1 {
-			mens++
-		} else {
-			womens++
+
+	}
+
+	for _, element := range records {
+
+		values, _ := strconv.Atoi(element[0])
+
+		if values <= 45 {
+			fmt.Println(element)
+			gender, _ := strconv.Atoi(element[1])
+			if gender == 1 {
+				mens++
+			} else {
+				womens++
+			}
 		}
 
 	}
 
-	statistics := math_process.MakeStatisticsMethods(newArray)
-	/*var percent float64 = 0
-	fmt.Println(statistics.Average)
+	statistics := math_process.MakeStatisticsMethods(ageArray)
+	statistics.MakeCovariance(ageArray, chestPain)
+	fmt.Println("\nPEOPLE INDICATORS")
+	fmt.Println("\nPeople under 45 years old in heart attack", (womens + mens))
+	fmt.Println("Mens percent affected:", ((mens * 100) / (mens + womens)))
+	fmt.Println("Womens percent affected: ", ((womens * 100) / (womens + mens)))
 
-	if mens >= womens {
-		fmt.Println(mens, " mens are propensed to get a heart attack")
-		percent = float64(mens * 100 / (mens + womens))
-		fmt.Printf("%.2f percent\n", percent)
-		//fmt.Printf("%.3f percent \n", float64((mens/(mens+womens))*100))
-	} else {
-		fmt.Println(womens, " womens are propensed to get a heart attack")
-		percent = float64(womens * 100 / (mens + womens))
-		fmt.Printf("%.2f percent\n", percent)
-		//fmt.Printf("%.3f percent\n", float64((womens/(mens+womens))*100))
-	}*/
-
-	/*fmt.Println("==================================")
-
-
-	fmt.Println("==================================")
-
-	fmt.Println(statistics.Variance)
-	fmt.Println(statistics.BetaOne)
-	fmt.Println(statistics.BetaZero)
-
-	fmt.Println(statistics)*/
-	statistics.MakeCovariance(chestPain, hearRate)
-	//fmt.Println(statistics)
-	statistics.PresentingStatisticModel()
 }
 
 func main() {
