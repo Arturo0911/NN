@@ -51,18 +51,6 @@ func NewStatisticsBody() *StatisticsParameters{}
 
 func MakeStatisticsMethods(values []float64) *StatisticsParameters {
 
-	/*statistics := StatisticsParameters{
-		StandardDesviation: 0,
-		Average:            0,
-		Variance:           0,
-		//ProcessErorr:       nil,
-	}*/
-
-	/*statistics := new(StatisticsParameters)
-	statistics.StandardDesviation = 0
-	statistics.Average = 0
-	statistics.Variance = 0*/
-
 	var sumTot float64 = 0
 	var average float64 = 0
 	var variance float64 = 0
