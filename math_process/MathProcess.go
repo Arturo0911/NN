@@ -52,14 +52,6 @@ type NeuronalNetwork struct {
 	YDataTest  []float64
 }
 
-/*
-func NewStatisticsBody() *StatisticsParameters{}
-	statistics := StatisticsParameters {}
-
-	statistics.Average = 0
-
-*/
-
 func MakeStatisticsMethods(values []float64) *StatisticsParameters {
 	// this function is for init the struct with the parameters
 	var sumTot float64 = 0
@@ -181,4 +173,19 @@ func (s *StatisticsParameters) InitTest(paramTrain float64) float64 {
 	//prediction := s.
 
 	return 0
+}
+
+func (s *StatisticsParameters) PresentingStatisticModel() {
+
+	fmt.Println("Average: ", s.Average)
+	fmt.Println("Beta one: ", s.BetaOne)
+	fmt.Println("Beta Zero: ", s.BetaZero)
+	fmt.Println("Bias: ", s.Bias)
+	fmt.Println("Correlation coefficient: ", s.CorrelationCoefficient)
+	fmt.Println("Covariance: ", s.Covariance)
+	fmt.Println("Standard desviation: ", s.StandardDesviation)
+	fmt.Println("X variance: ", s.Sx)
+	fmt.Println("Y variance: ", s.Sy)
+	fmt.Println("General Variance: ", s.Variance)
+
 }
