@@ -37,9 +37,8 @@ func readCSVFile(pathFile string) {
 
 	}
 
-	statistics := math_process.MakeStatisticsMethods(newArray)
-
-	fmt.Printf("variance %.2f standard desviation %.2f  and average %.2f\n", statistics.Variance, statistics.StandardDesviation, statistics.Average)
+	fmt.Println(math_process.MakeStatisticsMethods(newArray))
+	//fmt.Printf("variance %.2f standard desviation %.2f  and average %.2f\n", statistics.MakeStatisticsMethods(newArray), statistics.StandardDesviation, statistics.Average)
 
 }
 
