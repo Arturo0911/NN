@@ -8,17 +8,24 @@ import (
 	"strconv"
 )
 
-// Body of parameters
-
 //
-//.d8888b. 888           888   d8b        888   d8b                 8888888b.                                     888
-//d88P  Y88b888           888   Y8P        888   Y8P                888   Y88b                                    888
-//Y88b.     888           888              888                      888    888                                    888
-// "Y888b.  888888 8888b. 888888888.d8888b 888888888 .d8888b.d8888b 888   d88P 8888b. 888d88888888b.d88b.  .d88b. 888888 .d88b. 888d888.d8888b
-//    "Y88b.888       "88b888   88888K     888   888d88P"   88K     8888888P"     "88b888P"  888 "888 "88bd8P  Y8b888   d8P  Y8b888P"  88K
-//      "888888   .d888888888   888"Y8888b.888   888888     "Y8888b.888       .d888888888    888  888  88888888888888   88888888888    "Y8888b.
-// Y88b  d88PY88b. 888  888Y88b. 888     X88Y88b. 888Y88b.        X88888       888  888888    888  888  888Y8b.    Y88b. Y8b.    888         X88
-// "Y8888P"  "Y888"Y888888 "Y888888 88888P' "Y888888 "Y8888P 88888P'888       "Y888888888    888  888  888 "Y8888  "Y888 "Y8888 888     88888P'
+//	.d8888b. 888           888   d8b        888   d8b
+//	d88P  Y88b888           888   Y8P        888   Y8P
+//	Y88b.     888           888              888
+//	 "Y888b.  888888 8888b. 888888888.d8888b 888888888 .d8888b.d8888b
+//	    "Y88b.888       "88b888   88888K     888   888d88P"   88K
+//	      "888888   .d888888888   888"Y8888b.888   888888     "Y8888b.
+//	 Y88b  d88PY88b. 888  888Y88b. 888     X88Y88b. 888Y88b.        X8
+//	 "Y8888P"  "Y888"Y888888 "Y888888 88888P' "Y888888 "Y8888P 88888P'
+
+//	 8888888b.                                             888
+//	 888   Y88b                                            888
+//	 888    888                                            888
+//	 888   d88P 8888b. 888d888 8888b. 88888b.d88b.  .d88b. 888888 .d88b. 888d888.d8888b
+//	 8888888P"     "88b888P"      "88b888 "888 "88bd8P  Y8b888   d8P  Y8b888P"  88K
+//	 888       .d888888888    .d888888888  888  88888888888888   88888888888    "Y8888b.
+//	 888       888  888888    888  888888  888  888Y8b.    Y88b. Y8b.    888         X88
+//	 888       "Y888888888    "Y888888888  888  888 "Y8888  "Y888 "Y8888 888     88888P'
 
 type MathModel interface {
 }
@@ -28,11 +35,13 @@ type StatisticsParameters struct {
 	CorrelationCoefficient float64 // Metric of how much it's correlationship betweem two variables
 	Average                float64
 	Variance               float64 // Variance General
+	Covariance             float64 // covariance between values
 	Sx                     float64 // standard desviations of X
 	Sy                     float64 // Standard desviations of Y
 	BetaOne                float64 // The first parameter of math model
 	BetaZero               float64 // The second parameter
 	Bias                   float64 // desviation
+
 }
 
 type NeuronalNetwork struct {
@@ -96,7 +105,11 @@ func MakeStatisticsMethods(values []float64) *StatisticsParameters {
 	}
 }
 
-func MakeCovariance(X []float64, Y []float64) (float64, float64, error) {
+func (s *StatisticsParameters) MakeCovariance(X []float64, Y []float64) error {
+
+	// the third parameter to return is if the covariance is greater than
+	// 0, that's mean exists straight correlations between variables
+	// es decir a mayor valor en X mayor valor en Y
 
 	var XAverage float64 = 0
 	var YAverage float64 = 0
@@ -108,7 +121,7 @@ func MakeCovariance(X []float64, Y []float64) (float64, float64, error) {
 	var correlationCoefficient float64 = 0
 
 	if len(X) != len(Y) {
-		return 0, 0, errors.New("the size of ranges cannot be different")
+		return errors.New("the size of ranges cannot be different")
 	}
 
 	var XVolatileList []float64
@@ -145,6 +158,11 @@ func MakeCovariance(X []float64, Y []float64) (float64, float64, error) {
 
 	correlationCoefficient = covariance / (Sx * Sy)
 
-	return covariance, correlationCoefficient, nil
+	s.Sx = Sx
+	s.Sy = Sy
+	s.Covariance = covariance
+	s.CorrelationCoefficient = correlationCoefficient
+
+	return nil
 
 }
