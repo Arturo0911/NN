@@ -14,14 +14,14 @@ type StatisticsParameters struct {
 	//ProcessErorr error
 }
 
-func MakeStatisticsMethods(values []float64) StatisticsParameters {
+func (statistics *StatisticsParameters) MakeStatisticsMethods(values []float64) *StatisticsParameters {
 
-	statistics := StatisticsParameters{
+	/*statistics := StatisticsParameters{
 		StandardDesviation: 0,
 		Average:            0,
 		Variance:           0,
 		//ProcessErorr:       nil,
-	}
+	}*/
 
 	var sumTot float64 = 0
 	//var average float64 = 0
