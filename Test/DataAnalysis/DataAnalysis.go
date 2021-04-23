@@ -7,7 +7,6 @@ import (
 	"strconv"
 
 	"github.com/Arturo0911/NN/math_process"
-	//"bufio"
 )
 
 /*
@@ -51,7 +50,7 @@ func readCSVFile(pathFile string) {
 		value, err := strconv.ParseFloat(records[i][0], 64)
 
 		if err != nil {
-			break
+			continue
 		}
 		newArray = append(newArray, value)
 
@@ -87,7 +86,14 @@ func readCSVFile(pathFile string) {
 	fmt.Println("")
 
 	for _, element := range records {
-		fmt.Println(element[2])
+
+		value, _ := strconv.Atoi(element[1])
+		sex, _ := strconv.Atoi(element[0])
+
+		if value == 1 && sex >= 60 {
+			fmt.Println(element[9])
+		}
+
 	}
 
 	//fmt.Printf("variance %.2f standard desviation %.2f  and average %.2f\n", statistics.MakeStatisticsMethods(newArray), statistics.StandardDesviation, statistics.Average)
