@@ -143,19 +143,21 @@ func (s *StatisticsParameters) MakeCovariance(X []float64, Y []float64) error {
 		covariance += ((X[i] - XAverage) * (Y[i] - YAverage))
 		betaOne += ((X[i] - XAverage) * (Y[i] - YAverage))
 	}
-
+	fmt.Println("First covariance before Division", covariance)
 	s.BetaOne = betaOne / Sx
 	s.BetaZero = YAverage - (betaOne/Sx)*XAverage
-	fmt.Println(Sx)
+	fmt.Println("Before stracting", Sx)
+	fmt.Println("size", len(X))
 	// in both cases, make sqrt root in the Variance under their sizes
 	Sx = math.Sqrt((Sx / float64(len(X)-1)))
 	fmt.Println(Sx)
 	Sy = math.Sqrt((Sy / float64(len(Y)-1)))
-
+	fmt.Println(Sy)
 	s.Covariance = covariance / float64(len(X)-1)
-	s.CorrelationCoefficient = covariance / (Sx * Sy)
+	s.CorrelationCoefficient = s.Covariance / (Sx * Sy)
 
-	fmt.Println("covariance", covariance)
+	fmt.Println(s.Covariance)
+	fmt.Println("correlation coefficient: ", (covariance / (Sx * Sy)))
 	fmt.Println("sx and sy: ", Sx, Sy)
 
 	s.Sx = Sx
