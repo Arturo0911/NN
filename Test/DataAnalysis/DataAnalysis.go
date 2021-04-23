@@ -42,6 +42,9 @@ func readCSVFile(pathFile string) {
 	records, _ := reader.ReadAll()
 	newArray := make([]float64, 0)
 
+	chestPain := make([]float64, 0)
+	cholesterol := make([]float64, 0)
+
 	mens := 0
 	womens := 0
 
@@ -55,6 +58,11 @@ func readCSVFile(pathFile string) {
 		newArray = append(newArray, value)
 
 		gender, err := strconv.Atoi(records[i][1])
+		cp, _ := strconv.ParseFloat(records[i][2], 64)
+		cl, _ := strconv.ParseFloat(records[i][4], 64)
+
+		chestPain = append(chestPain, cp)
+		cholesterol = append(cholesterol, cl)
 
 		if err != nil {
 			continue
@@ -83,22 +91,16 @@ func readCSVFile(pathFile string) {
 		//fmt.Printf("%.3f percent\n", float64((womens/(mens+womens))*100))
 	}
 
+	fmt.Println("==================================")
+
+	statistics.MakeCovariance(chestPain, cholesterol)
+	fmt.Println("==================================")
+
+	fmt.Println(statistics.Variance)
+	fmt.Println(statistics.BetaOne)
+	fmt.Println(statistics.BetaZero)
+
 	fmt.Println(statistics)
-	fmt.Println()
-
-	/*for _, element := range records {
-
-		value, _ := strconv.Atoi(element[1])
-		sex, _ := strconv.Atoi(element[0])
-
-		if value == 1 && sex >= 60 {
-			fmt.Println(element[9])
-		}
-
-	}*/
-
-	//fmt.Printf("variance %.2f standard desviation %.2f  and average %.2f\n", statistics.MakeStatisticsMethods(newArray), statistics.StandardDesviation, statistics.Average)
-
 }
 
 func main() {

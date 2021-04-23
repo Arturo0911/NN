@@ -61,7 +61,7 @@ func NewStatisticsBody() *StatisticsParameters{}
 */
 
 func MakeStatisticsMethods(values []float64) *StatisticsParameters {
-
+	// this function is for init the struct with the parameters
 	var sumTot float64 = 0
 	var average float64 = 0
 	var variance float64 = 0
@@ -118,14 +118,13 @@ func (s *StatisticsParameters) MakeCovariance(X []float64, Y []float64) error {
 	var covariance float64 = 0
 	var Sx float64 = 0
 	var Sy float64 = 0
-	var correlationCoefficient float64 = 0
+
+	var betaOne float64 = 0
+	//var variance float64 = 0
 
 	if len(X) != len(Y) {
 		return errors.New("the size of ranges cannot be different")
 	}
-
-	var XVolatileList []float64
-	var YVolatileList []float64
 
 	for _, value := range X {
 		XSum += value
@@ -137,32 +136,42 @@ func (s *StatisticsParameters) MakeCovariance(X []float64, Y []float64) error {
 	XAverage = XSum / float64(len(X))
 	YAverage = YSum / float64(len(Y))
 
-	for _, element := range X {
-		XVolatileList = append(XVolatileList, (element - XAverage))
-		Sx += math.Pow((element - XAverage), 2)
-	}
-
-	for _, element := range Y {
-		YVolatileList = append(YVolatileList, (element - YAverage))
-		Sy += math.Pow((element - YAverage), 2)
-	}
-
-	Sx = math.Sqrt(Sx / float64(len(X)-1))
-	Sy = math.Sqrt(Sy / float64(len(Y)-1))
-
 	for i := 0; i < len(X); i++ {
-		covariance += XVolatileList[i] * YVolatileList[i]
+
+		Sx += math.Pow((X[i] - XAverage), 2)
+		Sy += math.Pow((Y[i] - YAverage), 2)
+		covariance += ((X[i] - XAverage) * (Y[i] - YAverage))
+		betaOne += ((X[i] - XAverage) * (Y[i] - YAverage))
 	}
 
-	covariance = covariance / float64(len(X)-1)
+	s.BetaOne = betaOne / Sx
+	s.BetaZero = YAverage - (betaOne/Sx)*XAverage
+	fmt.Println(Sx)
+	// in both cases, make sqrt root in the Variance under their sizes
+	Sx = math.Sqrt((Sx / float64(len(X)-1)))
+	fmt.Println(Sx)
+	Sy = math.Sqrt((Sy / float64(len(Y)-1)))
 
-	correlationCoefficient = covariance / (Sx * Sy)
+	s.Covariance = covariance / float64(len(X)-1)
+	s.CorrelationCoefficient = covariance / (Sx * Sy)
 
 	s.Sx = Sx
 	s.Sy = Sy
-	s.Covariance = covariance
-	s.CorrelationCoefficient = correlationCoefficient
 
 	return nil
 
+}
+
+//	'########:'########::'######::'########:'##::::'##::::'###::::'########:'##::::'##:'##::::'##::'#######::'########::'########:'##:::::::
+//	... ##..:: ##.....::'##... ##:... ##..:: ###::'###:::'## ##:::... ##..:: ##:::: ##: ###::'###:'##.... ##: ##.... ##: ##.....:: ##:::::::
+//	::: ##:::: ##::::::: ##:::..::::: ##:::: ####'####::'##:. ##::::: ##:::: ##:::: ##: ####'####: ##:::: ##: ##:::: ##: ##::::::: ##:::::::
+//	::: ##:::: ######:::. ######::::: ##:::: ## ### ##:'##:::. ##:::: ##:::: #########: ## ### ##: ##:::: ##: ##:::: ##: ######::: ##:::::::
+//	::: ##:::: ##...:::::..... ##:::: ##:::: ##. #: ##: #########:::: ##:::: ##.... ##: ##. #: ##: ##:::: ##: ##:::: ##: ##...:::: ##:::::::
+//	::: ##:::: ##:::::::'##::: ##:::: ##:::: ##:.:: ##: ##.... ##:::: ##:::: ##:::: ##: ##:.:: ##: ##:::: ##: ##:::: ##: ##::::::: ##:::::::
+//	::: ##:::: ########:. ######::::: ##:::: ##:::: ##: ##:::: ##:::: ##:::: ##:::: ##: ##:::: ##:. #######:: ########:: ########: ########:
+//	:::..:::::........:::......::::::..:::::..:::::..::..:::::..:::::..:::::..:::::..::..:::::..:::.......:::........:::........::........::
+
+func InitTest(paramTrain float64) float64 {
+
+	return 0
 }
