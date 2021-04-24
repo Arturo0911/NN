@@ -29,7 +29,7 @@ import (
 
 */
 
-func readCSVFile(pathFile string) {
+func ReadCSVFile(pathFile string) {
 
 	file, err := os.Open(pathFile)
 
@@ -79,9 +79,45 @@ func readCSVFile(pathFile string) {
 	prediction := math_process.InitTest(float64(28), statistics.BetaOne, statistics.BetaZero)
 	fmt.Println(prediction)
 
-	// still for make predictions taking another parameters
 }
+
+// use the same file of hear attack
+func CholesterolFbs(pathFile string) {
+
+	file, err := os.Open(pathFile)
+
+	if err != nil {
+		panic(err)
+	}
+
+	fileReader := csv.NewReader(file)
+
+	records, _ := fileReader.ReadAll()
+
+	arrayGlocouse := make([]float64, 0)
+	arrayCholesterol := make([]float64, 0)
+
+	for _, values := range records {
+
+		age, _ := strconv.Atoi(values[0])
+
+		if age >= 45 {
+			chol, _ := strconv.ParseFloat(values[4], 64)
+			gluc, _ := strconv.ParseFloat(values[5], 64)
+
+			arrayCholesterol = append(arrayCholesterol, chol)
+			arrayGlocouse = append(arrayGlocouse, gluc)
+
+		}
+	}
+
+	fmt.Println(arrayGlocouse)
+	fmt.Println(arrayCholesterol)
+
+}
+
 func main() {
 
-	readCSVFile("../../practices/heart.csv")
+	//ReadCSVFile("../../practices/heart.csv")
+	CholesterolFbs("../../practices/heart.csv")
 }
