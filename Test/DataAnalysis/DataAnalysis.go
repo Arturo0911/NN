@@ -48,52 +48,39 @@ func readCSVFile(pathFile string) {
 	mens := 0
 	womens := 0
 
-	for i := 1; i < len(records); i++ {
-		// get the ages to set context
-		value, err := strconv.ParseFloat(records[i][0], 64)
-
-		if err != nil {
-			continue
-		}
-		ageArray = append(ageArray, value)
-
-		cp, _ := strconv.ParseFloat(records[i][7], 64)
-		//tl, _ := strconv.ParseFloat(records[i][4], 64)
-
-		chestPain = append(chestPain, cp)
-		//hearRate = append(hearRate, tl)
-
-		if err != nil {
-			continue
-		}
-
-	}
-
 	for _, element := range records {
 
 		values, _ := strconv.Atoi(element[0])
 
 		if values <= 45 {
-			fmt.Println(element)
 			gender, _ := strconv.Atoi(element[1])
+			ageArray = append(ageArray, float64(values))
+			cp, _ := strconv.ParseFloat(element[2], 64)
+			chestPain = append(chestPain, cp)
+
 			if gender == 1 {
 				mens++
 			} else {
 				womens++
 			}
 		}
-
 	}
+
+	// Values from age under 45 years old and chest pain
 
 	statistics := math_process.MakeStatisticsMethods(ageArray)
 	statistics.MakeCovariance(ageArray, chestPain)
+	statistics.PresentingStatisticModel()
 	fmt.Println("\nPEOPLE INDICATORS")
 	fmt.Println("\nPeople under 45 years old in heart attack", (womens + mens))
 	fmt.Println("Mens percent affected:", ((mens * 100) / (mens + womens)))
 	fmt.Println("Womens percent affected: ", ((womens * 100) / (womens + mens)))
 
-}
+	prediction := math_process.InitTest(float64(28), statistics.BetaOne, statistics.BetaZero)
+	fmt.Println(prediction)
 
+	// still for make predictions taking another parameters
+}
 func main() {
 
 	readCSVFile("../../practices/heart.csv")

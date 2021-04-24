@@ -161,11 +161,15 @@ func (s *StatisticsParameters) MakeCovariance(X []float64, Y []float64) error {
 //	::: ##:::: ########:. ######::::: ##::::: ##:::: ##: ##:::: ##:::: ##:::: ##:::: ##: ##:::: ##:. #######:: ########:: ########: ########:
 //	:::..:::::........:::......::::::..:::::..:::::..::..:::::..:::::..:::::..:::::..::..:::::..:::.......:::........:::........::........::
 
-func (s *StatisticsParameters) InitTest(paramTrain float64) float64 {
+func InitTest(age float64, betaOne float64, betaZero float64) float64 {
 
-	//prediction := s.
+	//----------------------------------------------//
+	//               Y = β0 + β1*x                  //
+	//----------------------------------------------//
 
-	return 0
+	//prediction bassed on Y
+	predictionY := betaZero + betaOne*age
+	return predictionY
 }
 
 func (s *StatisticsParameters) PresentingStatisticModel() {
