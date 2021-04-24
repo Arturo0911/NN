@@ -76,7 +76,7 @@ func ReadCSVFile(pathFile string) {
 	fmt.Println("Mens percent affected:", ((mens * 100) / (mens + womens)))
 	fmt.Println("Womens percent affected: ", ((womens * 100) / (womens + mens)))
 
-	prediction := math_process.InitTest(float64(28), statistics.BetaOne, statistics.BetaZero)
+	prediction := math_process.InitTest(ageArray, statistics.BetaOne, statistics.BetaZero)
 	fmt.Println(prediction)
 
 }
@@ -94,8 +94,9 @@ func CholesterolFbs(pathFile string) {
 
 	records, _ := fileReader.ReadAll()
 
-	arrayGlocouse := make([]float64, 0)
+	arrayTrbps := make([]float64, 0)
 	arrayCholesterol := make([]float64, 0)
+	arrayAge := make([]float64, 0)
 
 	for _, values := range records {
 
@@ -103,16 +104,29 @@ func CholesterolFbs(pathFile string) {
 
 		if age >= 45 {
 			chol, _ := strconv.ParseFloat(values[4], 64)
-			gluc, _ := strconv.ParseFloat(values[5], 64)
+			trbps, _ := strconv.ParseFloat(values[3], 64)
 
 			arrayCholesterol = append(arrayCholesterol, chol)
-			arrayGlocouse = append(arrayGlocouse, gluc)
-
+			arrayTrbps = append(arrayTrbps, trbps)
+			arrayAge = append(arrayAge, float64(age))
 		}
 	}
 
-	fmt.Println(arrayGlocouse)
-	fmt.Println(arrayCholesterol)
+	stats := math_process.MakeStatisticsMethods(arrayAge)
+
+	stats.MakeCovariance(arrayCholesterol, arrayTrbps)
+
+	stats.PresentingStatisticModel()
+
+	predictions := math_process.InitTest(arrayCholesterol, stats.BetaOne, stats.BetaZero)
+
+	maths, err := math_process.CompareDataTrained(predictions, arrayCholesterol)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(maths)
 
 }
 

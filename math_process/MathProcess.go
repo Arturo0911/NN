@@ -177,15 +177,35 @@ func (s *StatisticsParameters) MakeCovariance(X []float64, Y []float64) error {
 //  ##:::: ##:. #######:: ########:: ########: ########:
 // .:::::..:::.......:::........:::........::........::
 
-func InitTest(age float64, betaOne float64, betaZero float64) float64 {
+func InitTest(parameterToTest []float64, betaOne float64, betaZero float64) []float64 {
 
 	//----------------------------------------------//
 	//               Y = β0 + β1*x                  //
 	//----------------------------------------------//
 
-	//prediction bassed on Y
-	predictionY := betaZero + betaOne*age
-	return predictionY
+	preidctions := make([]float64, 0)
+
+	for _, element := range parameterToTest {
+		preidctions = append(preidctions, (betaZero + betaOne*element))
+	}
+
+	return preidctions
+}
+
+func CompareDataTrained(dataTrained []float64, dataTest []float64) (float64, error) {
+
+	var mathErrorMetric float64
+
+	if len(dataTest) != len(dataTrained) {
+		return 0, errors.New("THe data should be the same size")
+	}
+
+	for i := 0; i < len(dataTest); i++ {
+		mathErrorMetric += ((dataTrained[i] * 100) / (dataTest[i]))
+	}
+
+	return fmt.Printf("%.3f", (mathErrorMetric / float64(len(dataTrained)))), nil
+
 }
 
 func (s *StatisticsParameters) PresentingStatisticModel() {
