@@ -204,7 +204,7 @@ func CompareDataTrained(dataTrained []float64, dataTest []float64) (float64, err
 		mathErrorMetric += ((dataTrained[i] * 100) / (dataTest[i]))
 	}
 
-	return fmt.Printf("%.3f", (mathErrorMetric / float64(len(dataTrained)))), nil
+	return (mathErrorMetric / float64(len(dataTrained))), nil
 
 }
 
