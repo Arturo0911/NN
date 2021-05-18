@@ -1,6 +1,10 @@
 package nn
 
-import "gonum.org/v1/gonum/mat"
+import (
+	"math"
+
+	"gonum.org/v1/gonum/mat"
+)
 
 // Contain all the whole information about
 // The neural network trained
@@ -20,4 +24,17 @@ type NeuralNetConfig struct {
 	OutputNeurons int
 	NumEpochs     int
 	LearningRate  float64
+}
+
+// Initialize the neuron with the parameters inside
+func NewNeuron(config NeuralNetConfig) *NeuralNet {
+
+	return &NeuralNet{
+		Config: config,
+	}
+}
+
+//Activation function => Sigmoid
+func Sigmoid(x float64) float64 {
+	return 1.0 / (1.0 + math.Exp(-x))
 }
