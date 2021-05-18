@@ -2,6 +2,3 @@
 
 
 figlet -c Neuronal Network
-
-
-go build 

@@ -8,6 +8,7 @@ import (
 
 func main() {
 
+	// Initialize the neuron
 	neuralConf := nn.NeuralNetConfig{
 		InputNeurons:  3,
 		HiddenNeurons: 3,
