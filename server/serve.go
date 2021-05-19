@@ -1,3 +1,7 @@
 package server
 
-func InitServer() {}
+import "fmt"
+
+func InitServer() {
+	fmt.Println("Initializing server")
+}
