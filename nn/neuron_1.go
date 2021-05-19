@@ -39,12 +39,7 @@ func (nn *NeuralNet) Train(x *mat.Dense, y *mat.Dense) error {
 			record[index] = randGen.Float64()
 		}
 	}
-	fmt.Println("wHiddenRaw: ", wHiddenRaw)
-	fmt.Println("wOutputRaw: ", wOutputRaw)
-	fmt.Println("bHiddenRaw: ", bHiddenRaw)
-	fmt.Println("bOutRaw: ", bOutputRaw)
 
-	fmt.Println("\n\nThe mat dense values")
 	// Now create a NewDense for every parameter and add the respective array previously fill it
 	wHidden := mat.NewDense(nn.Config.InputNeurons, nn.Config.HiddenNeurons, wHiddenRaw)
 	wOutput := mat.NewDense(nn.Config.OutputNeurons, nn.Config.HiddenNeurons, wOutputRaw)
@@ -56,9 +51,25 @@ func (nn *NeuralNet) Train(x *mat.Dense, y *mat.Dense) error {
 	fmt.Println(wOutput)
 	fmt.Println(bOutput)
 
-	var output mat.Dense
+	//var output mat.Dense
 
-	fmt.Println(output.Dims())
+	// Looping over the number of epochs
+	for i := 0; i < nn.Config.NumberEpochs; i++ {
+
+		var hiddenLayerInput mat.Dense
+		hiddenLayerInput.Mul(x, wHidden)
+		addBHidden := func(_, col int, value float64) float64 {
+			return (value + bHidden.At(0, col))
+		}
+		hiddenLayerInput.Apply(addBHidden, &hiddenLayerInput)
+
+		var hiddenLayerActivation mat.Dense
+		applySigmoid := func(_, _ int, value float64) float64 {
+			return Sigmoid(value)
+		}
+		hiddenLayerActivation.Apply(applySigmoid, &hiddenLayerInput)
+
+	}
 
 	return nil
 
