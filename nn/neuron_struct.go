@@ -1,8 +1,10 @@
 package nn
 
 import (
+	"errors"
 	"math"
 
+	"gonum.org/v1/gonum/floats"
 	"gonum.org/v1/gonum/mat"
 )
 
@@ -43,3 +45,36 @@ func Sigmoid(x float64) float64 {
 func SigmoidePrime(x float64) float64 {
 	return x * (1.0 - x)
 }
+
+// This functions is used to fix the bias at the output
+func SumAlongAxis(axis int, m *mat.Dense) (*mat.Dense, error) {
+
+	nRows, nCol := m.Dims()
+	var output *mat.Dense
+
+	switch axis {
+	case 0:
+		data := make([]float64, nCol)
+		for i := 0; i < nCol; i++ {
+			col := mat.Col(nil, i, m)
+			data[i] = floats.Sum(col)
+		}
+		output = mat.NewDense(1, nCol, data)
+	case 1:
+		data := make([]float64, nRows)
+		for j := 0; j < nRows; j++ {
+			row := mat.Row(nil, j, m)
+			data[j] = floats.Sum(row)
+		}
+		output = mat.NewDense(nRows, 1, data)
+	default:
+		return nil, errors.New("invalid axis, should to be between 0 or 1")
+
+	}
+
+	return output, nil
+}
+
+// Another way to fix the data
+// even is a best way that use the backtracking tradicional
+func SthocasticGradientDescendt() {}
