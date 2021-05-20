@@ -1,6 +1,10 @@
 package nn
 
-import "gonum.org/v1/gonum/mat"
+import (
+	"math"
+
+	"gonum.org/v1/gonum/mat"
+)
 
 // Contain all the whole information about
 // The neural network trained
@@ -28,4 +32,14 @@ type NeuralNetConfig struct {
 	HiddenNeurons int
 	NumberEpochs  int
 	LearningRate  float64
+}
+
+// Activation function
+func Sigmoid(x float64) float64 {
+	return 1.0 / (1.0 + math.Exp(-x))
+}
+
+// Derivative sigmoid function
+func SigmoidePrime(x float64) float64 {
+	return x * (1.0 - x)
 }

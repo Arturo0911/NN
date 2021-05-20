@@ -3,7 +3,6 @@ package nn
 import (
 	"errors"
 	"fmt"
-	"math"
 	"math/rand"
 	"time"
 
@@ -16,16 +15,6 @@ func NewNeuron1(config NeuralNetConfig) *NeuralNet {
 	return &NeuralNet{
 		Config: config,
 	}
-}
-
-//Activation function => Sigmoid
-func Sigmoid(x float64) float64 {
-	return 1.0 / (1.0 + math.Exp(-x))
-}
-
-// derivative
-func SigmoidePrime(x float64) float64 {
-	return x * (1.0 - x)
 }
 
 func SumAlongAxis(axis int, m *mat.Dense) (*mat.Dense, error) {

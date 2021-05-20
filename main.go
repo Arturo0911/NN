@@ -52,7 +52,14 @@ func main() {
 	matPresentation(x)
 	matPresentation(y)
 
+	fmt.Printf("\n\n")
 	output.MulElem(x, y)
+	matPresentation(&output)
+	fmt.Printf("\n\n")
+	output.Add(x, y)
+	matPresentation(&output)
+	fmt.Printf("\n\n")
+	output.Scale(1.0, x.T())
 	matPresentation(&output)
 
 }
