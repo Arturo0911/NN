@@ -3,10 +3,48 @@ package main
 import (
 	"fmt"
 
-	"gonum.org/v1/gonum/mat"
+	"github.com/sjwhitworth/golearn/base"
+	"github.com/sjwhitworth/golearn/evaluation"
+	"github.com/sjwhitworth/golearn/knn"
 )
 
 // @author: Arturo Negreiros (AKA Pxyl0xd)
+
+const pathFile = ""
+
+func main() {
+
+	// Load in a dataset, with headers. Header attributes will be stored.
+	// Think of instances as a Data Frame structure in R or Pandas.
+	// You can also create instances from scratch.
+	rawData, err := base.ParseCSVToInstances("datasets/iris.csv", false)
+	if err != nil {
+		panic(err)
+	}
+
+	// Print a pleasant summary of your data.
+	fmt.Println(rawData)
+
+	//Initialises a new KNN classifier
+	cls := knn.NewKnnClassifier("euclidean", "linear", 2)
+
+	//Do a training-test split
+	trainData, testData := base.InstancesTrainTestSplit(rawData, 0.50)
+	cls.Fit(trainData)
+
+	//Calculates the Euclidean distance and returns the most popular label
+	predictions, err := cls.Predict(testData)
+	if err != nil {
+		panic(err)
+	}
+
+	// Prints precision/recall metrics
+	confusionMat, err := evaluation.GetConfusionMatrix(testData, predictions)
+	if err != nil {
+		panic(fmt.Sprintf("Unable to get confusion matrix: %s", err.Error()))
+	}
+	fmt.Println(evaluation.GetSummary(confusionMat))
+}
 
 /*func main() {
 
@@ -37,7 +75,7 @@ import (
 
 }*/
 
-func matPresentation(value *mat.Dense) {
+/*func matPresentation(value *mat.Dense) {
 	element := mat.Formatted(value, mat.Prefix(" "))
 	fmt.Println(element)
 }
@@ -62,4 +100,4 @@ func main() {
 	output.Scale(1.0, x.T())
 	matPresentation(&output)
 
-}
+}*/
