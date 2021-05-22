@@ -90,6 +90,21 @@ func (nn *NeuralNet) TrainNN2(x *mat.Dense, y *mat.Dense) error {
 		var dHidden mat.Dense
 		dHidden.MulElem(&errorAtHidden, &slopeHiddLayer)
 
+		// Adjust parameters
+
+		var wOutAdj mat.Dense
+		bOutAdj, err := SumAlongAxis(0, &dOutput)
+		if err != nil {
+			return err
+		}
+
+		var wHiddenAjd mat.Dense
+
+		bHiddenAdj, err := SumAlongAxis(0, &dHidden)
+		if err != nil {
+			return err
+		}
+
 	}
 
 	nn.BHidden = bHidden
