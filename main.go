@@ -3,14 +3,13 @@ package main
 import (
 	"fmt"
 
-	"github.com/sjwhitworth/golearn/base"
-	"github.com/sjwhitworth/golearn/evaluation"
-	"github.com/sjwhitworth/golearn/knn"
+	"github.com/Arturo0911/NN/nn"
+	"gonum.org/v1/gonum/mat"
 )
 
 // @author: Arturo Negreiros (AKA Pxyl0xd)
 
-const pathFile = ""
+/*const pathFile = ""
 
 func main() {
 
@@ -44,9 +43,9 @@ func main() {
 		panic(fmt.Sprintf("Unable to get confusion matrix: %s", err.Error()))
 	}
 	fmt.Println(evaluation.GetSummary(confusionMat))
-}
+}*/
 
-/*func main() {
+func main() {
 
 	// Initialize one neuron
 
@@ -73,7 +72,7 @@ func main() {
 	f := mat.Formatted(neuron.WHidden, mat.Prefix(" "))
 	fmt.Println(f)
 
-}*/
+}
 
 /*func matPresentation(value *mat.Dense) {
 	element := mat.Formatted(value, mat.Prefix(" "))
