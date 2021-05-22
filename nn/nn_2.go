@@ -1,6 +1,7 @@
 package nn
 
 import (
+	"errors"
 	"math/rand"
 	"time"
 
@@ -128,4 +129,39 @@ func (nn *NeuralNet) TrainNN2(x *mat.Dense, y *mat.Dense) error {
 	nn.WOutput = wOutput
 
 	return nil
+}
+
+func (nn *NeuralNet) Prediction(x *mat.Dense) (*mat.Dense, error) {
+
+	var output mat.Dense
+
+	if nn.BHidden == nil || nn.BOutput == nil || nn.WHidden == nil || nn.WOutput == nil {
+		return nil, errors.New("parameters trained should be setted in the configuration")
+	}
+
+	// Create a hiddenLayer for the data
+	var wHiddenLayer mat.Dense
+	wHiddenLayer.Mul(nn.WHidden, x)
+
+	addBHidden := func(_, col int, v float64) float64 {
+		return v + nn.BHidden.At(0, col)
+	}
+	wHiddenLayer.Apply(addBHidden, &wHiddenLayer)
+
+	// Create a mat.Dense type to store the values for the activation
+	var hiddenLayerActivation mat.Dense
+	applySigmoid := func(_, _ int, v float64) float64 {
+		return Sigmoid(v)
+	}
+	hiddenLayerActivation.Apply(applySigmoid, &wHiddenLayer)
+
+	var outLayer mat.Dense
+	outLayer.Mul(&hiddenLayerActivation, nn.WOutput)
+	addOutB := func(_, col int, v float64) float64 {
+		return v + nn.BOutput.At(0, col)
+	}
+	outLayer.Apply(addOutB, &outLayer)
+	output.Apply(applySigmoid, &outLayer)
+
+	return &output, nil
 }

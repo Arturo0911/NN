@@ -75,6 +75,8 @@ func SumAlongAxis(axis int, m *mat.Dense) (*mat.Dense, error) {
 	return output, nil
 }
 
+func Prediction() {}
+
 // Another way to fix the data
 // even is a best way that use the backtracking tradicional
 func SthocasticGradientDescendt() {}

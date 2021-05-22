@@ -9,42 +9,6 @@ import (
 
 // @author: Arturo Negreiros (AKA Pxyl0xd)
 
-/*const pathFile = ""
-
-func main() {
-
-	// Load in a dataset, with headers. Header attributes will be stored.
-	// Think of instances as a Data Frame structure in R or Pandas.
-	// You can also create instances from scratch.
-	rawData, err := base.ParseCSVToInstances("datasets/iris.csv", false)
-	if err != nil {
-		panic(err)
-	}
-
-	// Print a pleasant summary of your data.
-	fmt.Println(rawData)
-
-	//Initialises a new KNN classifier
-	cls := knn.NewKnnClassifier("euclidean", "linear", 2)
-
-	//Do a training-test split
-	trainData, testData := base.InstancesTrainTestSplit(rawData, 0.50)
-	cls.Fit(trainData)
-
-	//Calculates the Euclidean distance and returns the most popular label
-	predictions, err := cls.Predict(testData)
-	if err != nil {
-		panic(err)
-	}
-
-	// Prints precision/recall metrics
-	confusionMat, err := evaluation.GetConfusionMatrix(testData, predictions)
-	if err != nil {
-		panic(fmt.Sprintf("Unable to get confusion matrix: %s", err.Error()))
-	}
-	fmt.Println(evaluation.GetSummary(confusionMat))
-}*/
-
 func main() {
 
 	// Initialize one neuron
@@ -55,12 +19,15 @@ func main() {
 		0.0, 1.0, 0.0, 1.0,
 	})
 
-	y := mat.NewDense(3, 1, []float64{1.0, 1.0, 0.0})
+	y := mat.NewDense(3, 2, []float64{
+		1.0, 1.0,
+		0.0, 1.1,
+		2.1, 1.1})
 
 	neuralConf := nn.NeuralNetConfig{
 		InputNeurons:  4,
 		HiddenNeurons: 3,
-		OutputNeurons: 1,
+		OutputNeurons: 2,
 		NumberEpochs:  5000,
 		LearningRate:  0.3,
 	}
