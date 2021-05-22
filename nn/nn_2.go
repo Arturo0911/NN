@@ -93,17 +93,32 @@ func (nn *NeuralNet) TrainNN2(x *mat.Dense, y *mat.Dense) error {
 		// Adjust parameters
 
 		var wOutAdj mat.Dense
+		// Multiplie the Transpose of the activation from the derivative of output
+		wOutAdj.Mul(hiddenLayerActivation.T(), &dOutput)
+		// using the learning rate, to multiply by the same mat dense, that is the adjusted weights
+		wOutAdj.Scale(nn.Config.LearningRate, &wOutAdj)
+		// After that, switch the last weights with the new weights
+		wOutAdj.Add(wOutput, &wOutAdj)
+
+		// Obtain the bias to do the same action
 		bOutAdj, err := SumAlongAxis(0, &dOutput)
 		if err != nil {
 			return err
 		}
+		bOutAdj.Scale(nn.Config.LearningRate, bOutAdj)
+		bOutAdj.Add(bOutput, bOutAdj)
 
-		var wHiddenAjd mat.Dense
+		var wHiddenAdj mat.Dense
+		wHiddenAdj.Mul(x.T(), &dOutput)
+		wHiddenAdj.Scale(nn.Config.LearningRate, &wHiddenAdj)
+		wHiddenAdj.Add(wHidden, &wHiddenAdj)
 
 		bHiddenAdj, err := SumAlongAxis(0, &dHidden)
 		if err != nil {
 			return err
 		}
+		bHiddenAdj.Scale(nn.Config.LearningRate, bHiddenAdj)
+		bHiddenAdj.Add(bHidden, bHiddenAdj)
 
 	}
 
