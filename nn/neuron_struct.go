@@ -3,6 +3,8 @@ package nn
 import (
 	"errors"
 	"math"
+	"math/rand"
+	"time"
 
 	"gonum.org/v1/gonum/floats"
 	"gonum.org/v1/gonum/mat"
@@ -22,9 +24,13 @@ type NeuralNet struct {
 
 // NeuralNetconfig define the neural Network structure
 // Basically the architecture explained
-// Set the struct of the Neural net and the neural congfiguration
-// Input neurons the numbers of attributes that we are going to feed in the network
-// Outout neurons is the number of nodes at the end, previously setting up to make the classification in one of three classes
+// Set the struct of the Neural net and
+// the neural congfiguration
+// Input neurons the numbers of attributes
+//that we are going to feed in the network
+// Outout neurons is the number of nodes at the end,
+//previously setting up to make the classification in
+//one of three classes
 // Hidden Neuron, the hidden layers with nodes inside
 // The number of Epochs is reference at the number of iteration
 // that the train should to do
@@ -80,3 +86,29 @@ func Prediction() {}
 // Another way to fix the data
 // even is a best way that use the backtracking tradicional
 func SthocasticGradientDescendt() {}
+
+//Back propagation side
+func BackPropagationForm() (*mat.Dense, error) {
+
+	var errorDense mat.Dense
+	return &errorDense, nil
+}
+
+func AdjustingWeights(x *mat.Dense) (*mat.Dense, *mat.Dense, error) {
+	var (
+		wAdjHidden mat.Dense
+		wAdjOut    mat.Dense
+	)
+	wAdjHidden.Mul(x.T(), &wAdjHidden)
+
+	return &wAdjHidden, &wAdjOut, nil
+}
+
+// Generate float random numbers
+// to initialize the weights
+func GenerateRandomSeed() float64 {
+
+	randSource := rand.NewSource(time.Now().UnixNano())
+	randGen := rand.New(randSource)
+	return randGen.Float64()
+}
