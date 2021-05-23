@@ -41,6 +41,11 @@ func initNN() (*FormPrediction, error) {
 
 }
 
+func initNeuronServer() {
+
+	fmt.Println("Initilizing server...")
+}
+
 func InitServer() {
 	fmt.Println("Initializing server")
 	http.HandleFunc("/neuron", func(w http.ResponseWriter, r *http.Request) {
