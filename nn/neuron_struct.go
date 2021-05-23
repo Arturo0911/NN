@@ -27,10 +27,10 @@ type NeuralNet struct {
 // Set the struct of the Neural net and
 // the neural congfiguration
 // Input neurons the numbers of attributes
-//that we are going to feed in the network
+// that we are going to feed in the network
 // Outout neurons is the number of nodes at the end,
-//previously setting up to make the classification in
-//one of three classes
+// previously setting up to make the classification in
+// one of three classes
 // Hidden Neuron, the hidden layers with nodes inside
 // The number of Epochs is reference at the number of iteration
 // that the train should to do
@@ -88,20 +88,67 @@ func Prediction() {}
 func SthocasticGradientDescendt() {}
 
 //Back propagation side
-func BackPropagationForm() (*mat.Dense, error) {
+func BackPropagationForm(y, wOutput *mat.Dense, output, hiddenLayerActivation mat.Dense) (mat.Dense,
+	mat.Dense, mat.Dense, mat.Dense, mat.Dense, mat.Dense, error) {
 
-	var errorDense mat.Dense
-	return &errorDense, nil
+	applySigmoidePrime := func(_, _ int, v float64) float64 {
+		return SigmoidePrime(v)
+	}
+
+	var (
+		networkErr         mat.Dense
+		slopeOutputLayer   mat.Dense
+		slopeHiddenLayer   mat.Dense
+		errorAtHiddenLayer mat.Dense
+		dOutput            mat.Dense
+		dHiddenLayer       mat.Dense
+	)
+
+	networkErr.Sub(y, &output)
+	slopeOutputLayer.Apply(applySigmoidePrime, &output)
+	slopeHiddenLayer.Apply(applySigmoidePrime, &hiddenLayerActivation)
+
+	dOutput.MulElem(&networkErr, &slopeOutputLayer)
+
+	errorAtHiddenLayer.Mul(&dOutput, wOutput.T())
+
+	dHiddenLayer.MulElem(&errorAtHiddenLayer, &slopeHiddenLayer)
+
+	return networkErr, slopeOutputLayer, slopeHiddenLayer,
+		errorAtHiddenLayer, dOutput, dHiddenLayer, nil
 }
 
-func AdjustingWeights(x *mat.Dense) (*mat.Dense, *mat.Dense, error) {
+// This function return the adjusted weights
+func AdjustingWeights(x, wHidden, hiddenLayer, wOut *mat.Dense,
+	dHiddenLayer, dOutput mat.Dense, lr float64) (*mat.Dense, *mat.Dense, error) {
 	var (
 		wAdjHidden mat.Dense
 		wAdjOut    mat.Dense
 	)
-	wAdjHidden.Mul(x.T(), &wAdjHidden)
+	wAdjOut.Mul(hiddenLayer.T(), &dOutput)
+	wAdjOut.Scale(lr, &wAdjOut)
+	//wAdjOut.Add(wOut, &wAdjOut)
+
+	wAdjHidden.Mul(x.T(), &dHiddenLayer)
+	wAdjHidden.Scale(lr, &wAdjHidden)
+	//wAdjHidden.Add(wHidden, &wAdjHidden)
 
 	return &wAdjHidden, &wAdjOut, nil
+}
+func AdjustingBias(dOutput, dHiddenLayer mat.Dense) (*mat.Dense, *mat.Dense, error) {
+
+	bOutdAdj, err := SumAlongAxis(0, &dOutput)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	bHiddenAdj, err := SumAlongAxis(0, &dHiddenLayer)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return bOutdAdj, bHiddenAdj, nil
+
 }
 
 // Generate float random numbers
