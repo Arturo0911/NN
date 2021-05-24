@@ -58,3 +58,15 @@ func MakingFiles(pathFile string) error {
 
 	return nil
 }
+
+func CheckFiles(pathFile, trainFile string) error {
+
+	_, err := os.Open(trainFile)
+
+	if err != nil {
+		if err_ := MakingFiles(pathFile); err_ != nil {
+			return err_
+		}
+	}
+	return nil
+}
