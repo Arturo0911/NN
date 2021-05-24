@@ -19,8 +19,12 @@ func printingMatDense(a *mat.Dense) {
 func (nn *NeuralNet) InitTraining(x, y *mat.Dense) error {
 
 	wHidden, bHidden, wOutput, bOutput := CreateMatrixDense(nn.Config.HiddenNeurons, nn.Config.InputNeurons, nn.Config.OutputNeurons)
-
-	for i := 0; i < nn.Config.NumberEpochs; i++ {
+	printingMatDense(wHidden)
+	printingMatDense(x)
+	var response mat.Dense
+	response.Mul(wHidden, x)
+	printingMatDense(&response)
+	/*for i := 0; i < nn.Config.NumberEpochs; i++ {
 
 		output, hiddenLayerActivation := InitProcess(x, wOutput, wHidden, bOutput, bHidden)
 		dOutput, dHidden := BackPropagationForm(y, wOutput, output, hiddenLayerActivation)
@@ -37,7 +41,7 @@ func (nn *NeuralNet) InitTraining(x, y *mat.Dense) error {
 		bOutput.Add(bOutput, bOutdAdj)
 		bHidden.Add(bHidden, bHiddenAdj)
 
-	}
+	}*/
 
 	nn.WHidden = wHidden
 	nn.BHidden = bHidden
@@ -45,4 +49,23 @@ func (nn *NeuralNet) InitTraining(x, y *mat.Dense) error {
 	nn.BOutput = bOutput
 
 	return nil
+}
+
+func RunNeuronThird() {
+
+	config := NeuralNetConfig{
+		InputNeurons:  3,
+		HiddenNeurons: 3,
+		OutputNeurons: 4,
+		NumberEpochs:  2000,
+		LearningRate:  0.2,
+	}
+
+	/*
+		the weights dimensions are:
+		[3x3] hidden
+		[3x4] output
+	*/
+	fmt.Println(config)
+
 }

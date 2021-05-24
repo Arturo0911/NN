@@ -26,7 +26,7 @@ func main() {
 		InputNeurons:  4,
 		HiddenNeurons: 3,
 		OutputNeurons: 2,
-		NumberEpochs:  20000000,
+		NumberEpochs:  2000,
 		LearningRate:  0.3,
 	}
 	neuron := nn.InitNeuron3(neuralConf)
@@ -34,34 +34,4 @@ func main() {
 		panic(err)
 	}
 
-	//f := mat.Formatted(neuron.WHidden, mat.Prefix(" "))
-	//fmt.Println(f)
-
 }
-
-/*func matPresentation(value *mat.Dense) {
-	element := mat.Formatted(value, mat.Prefix(" "))
-	fmt.Println(element)
-}
-
-func main() {
-	var output mat.Dense
-
-	x := mat.NewDense(2, 2, []float64{65, 43, 37, 66})
-	y := mat.NewDense(2, 2, []float64{35, 55, 98, 78})
-
-	fmt.Println("Showing matrix x and y respectevly")
-	matPresentation(x)
-	matPresentation(y)
-
-	fmt.Printf("\n\n")
-	output.MulElem(x, y)
-	matPresentation(&output)
-	fmt.Printf("\n\n")
-	output.Add(x, y)
-	matPresentation(&output)
-	fmt.Printf("\n\n")
-	output.Scale(1.0, x.T())
-	matPresentation(&output)
-
-}*/
