@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/Arturo0911/NN/nn"
 	"gonum.org/v1/gonum/mat"
 )
@@ -28,16 +26,16 @@ func main() {
 		InputNeurons:  4,
 		HiddenNeurons: 3,
 		OutputNeurons: 2,
-		NumberEpochs:  5000,
+		NumberEpochs:  20000000,
 		LearningRate:  0.3,
 	}
-	neuron := nn.NewNeuron1(neuralConf)
-	if err := neuron.Train(x, y); err != nil {
+	neuron := nn.InitNeuron3(neuralConf)
+	if err := neuron.InitTraining(x, y); err != nil {
 		panic(err)
 	}
 
-	f := mat.Formatted(neuron.WHidden, mat.Prefix(" "))
-	fmt.Println(f)
+	//f := mat.Formatted(neuron.WHidden, mat.Prefix(" "))
+	//fmt.Println(f)
 
 }
 

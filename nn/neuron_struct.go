@@ -3,8 +3,6 @@ package nn
 import (
 	"errors"
 	"math"
-	"math/rand"
-	"time"
 
 	"gonum.org/v1/gonum/floats"
 	"gonum.org/v1/gonum/mat"
@@ -82,80 +80,3 @@ func SumAlongAxis(axis int, m *mat.Dense) (*mat.Dense, error) {
 }
 
 func Prediction() {}
-
-// Another way to fix the data
-// even is a best way that use the backtracking tradicional
-func SthocasticGradientDescendt() {}
-
-//Back propagation side
-func BackPropagationForm(y, wOutput *mat.Dense, output, hiddenLayerActivation mat.Dense) (mat.Dense,
-	mat.Dense, mat.Dense, mat.Dense, mat.Dense, mat.Dense, error) {
-
-	applySigmoidePrime := func(_, _ int, v float64) float64 {
-		return SigmoidePrime(v)
-	}
-
-	var (
-		networkErr         mat.Dense
-		slopeOutputLayer   mat.Dense
-		slopeHiddenLayer   mat.Dense
-		errorAtHiddenLayer mat.Dense
-		dOutput            mat.Dense
-		dHiddenLayer       mat.Dense
-	)
-
-	networkErr.Sub(y, &output)
-	slopeOutputLayer.Apply(applySigmoidePrime, &output)
-	slopeHiddenLayer.Apply(applySigmoidePrime, &hiddenLayerActivation)
-
-	dOutput.MulElem(&networkErr, &slopeOutputLayer)
-
-	errorAtHiddenLayer.Mul(&dOutput, wOutput.T())
-
-	dHiddenLayer.MulElem(&errorAtHiddenLayer, &slopeHiddenLayer)
-
-	return networkErr, slopeOutputLayer, slopeHiddenLayer,
-		errorAtHiddenLayer, dOutput, dHiddenLayer, nil
-}
-
-// This function return the adjusted weights
-func AdjustingWeights(x, wHidden, hiddenLayer, wOut *mat.Dense,
-	dHiddenLayer, dOutput mat.Dense, lr float64) (*mat.Dense, *mat.Dense, error) {
-	var (
-		wAdjHidden mat.Dense
-		wAdjOut    mat.Dense
-	)
-	wAdjOut.Mul(hiddenLayer.T(), &dOutput)
-	wAdjOut.Scale(lr, &wAdjOut)
-	//wAdjOut.Add(wOut, &wAdjOut)
-
-	wAdjHidden.Mul(x.T(), &dHiddenLayer)
-	wAdjHidden.Scale(lr, &wAdjHidden)
-	//wAdjHidden.Add(wHidden, &wAdjHidden)
-
-	return &wAdjHidden, &wAdjOut, nil
-}
-func AdjustingBias(dOutput, dHiddenLayer mat.Dense) (*mat.Dense, *mat.Dense, error) {
-
-	bOutdAdj, err := SumAlongAxis(0, &dOutput)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	bHiddenAdj, err := SumAlongAxis(0, &dHiddenLayer)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return bOutdAdj, bHiddenAdj, nil
-
-}
-
-// Generate float random numbers
-// to initialize the weights
-func GenerateRandomSeed() float64 {
-
-	randSource := rand.NewSource(time.Now().UnixNano())
-	randGen := rand.New(randSource)
-	return randGen.Float64()
-}
