@@ -47,8 +47,8 @@ func BackPropagationForm(y, wOutput *mat.Dense, output, hiddenLayerActivation ma
 		dHiddenLayer       mat.Dense
 	)
 
-	networkErr.Sub(y, &output)
-	slopeOutputLayer.Apply(applySigmoidePrime, &output)
+	networkErr.Sub(y, &output)                          // Calculating the difference between the data desired and the data obtained
+	slopeOutputLayer.Apply(applySigmoidePrime, &output) // Applying the derivative sigmoid
 	slopeHiddenLayer.Apply(applySigmoidePrime, &hiddenLayerActivation)
 
 	dOutput.MulElem(&networkErr, &slopeOutputLayer)

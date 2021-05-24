@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/Arturo0911/NN/nn"
-	"gonum.org/v1/gonum/mat"
+	"log"
+
+	"github.com/Arturo0911/NN/model/settings"
 )
 
 // @author: Arturo Negreiros (AKA Pxyl0xd)
@@ -11,7 +12,7 @@ func main() {
 
 	// Initialize one neuron
 
-	x := mat.NewDense(3, 4, []float64{
+	/*x := mat.NewDense(3, 4, []float64{
 		1.0, 0.0, 1.0, 0.0,
 		1.0, 0.0, 1.0, 1.0,
 		0.0, 1.0, 0.0, 1.0,
@@ -32,6 +33,10 @@ func main() {
 	neuron := nn.InitNeuron3(neuralConf)
 	if err := neuron.InitTraining(x, y); err != nil {
 		panic(err)
+	}*/
+
+	if err := settings.MakingFiles("wineQualityReds.csv"); err != nil {
+		log.Fatal(err)
 	}
 
 }
