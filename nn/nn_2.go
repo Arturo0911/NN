@@ -1,7 +1,6 @@
 package nn
 
 import (
-	"errors"
 	"math/rand"
 	"time"
 
@@ -131,7 +130,7 @@ func (nn *NeuralNet) TrainNN2(x *mat.Dense, y *mat.Dense) error {
 	return nil
 }
 
-func (nn *NeuralNet) Prediction(x *mat.Dense) (*mat.Dense, error) {
+/*func (nn *NeuralNet) Prediction(x *mat.Dense) (*mat.Dense, error) {
 
 	var output mat.Dense
 
@@ -164,4 +163,4 @@ func (nn *NeuralNet) Prediction(x *mat.Dense) (*mat.Dense, error) {
 	output.Apply(applySigmoid, &outLayer)
 
 	return &output, nil
-}
+}*/

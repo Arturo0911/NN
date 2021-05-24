@@ -78,5 +78,3 @@ func SumAlongAxis(axis int, m *mat.Dense) (*mat.Dense, error) {
 
 	return output, nil
 }
-
-func Prediction() {}
