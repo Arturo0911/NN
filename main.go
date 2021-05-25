@@ -1,8 +1,6 @@
 package main
 
-import (
-	"github.com/Arturo0911/NN/model/plotting"
-)
+import "github.com/Arturo0911/NN/model/plotting"
 
 // @author: Arturo Negreiros (AKA Pxyl0xd)
 

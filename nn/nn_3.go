@@ -23,8 +23,8 @@ func (nn *NeuralNet) InitTraining(x, y *mat.Dense) error {
 	printingMatDense(x)
 	var response mat.Dense
 	response.Mul(wHidden, x)
-	printingMatDense(&response)
-	/*for i := 0; i < nn.Config.NumberEpochs; i++ {
+	//printingMatDense(&response)
+	for i := 0; i < nn.Config.NumberEpochs; i++ {
 
 		output, hiddenLayerActivation := InitProcess(x, wOutput, wHidden, bOutput, bHidden)
 		dOutput, dHidden := BackPropagationForm(y, wOutput, output, hiddenLayerActivation)
@@ -32,16 +32,13 @@ func (nn *NeuralNet) InitTraining(x, y *mat.Dense) error {
 		if err != nil {
 			return err
 		}
-		fmt.Println("")
-		printingMatDense(&output)
-		fmt.Println("")
 
 		wOutput.Add(wOutput, &wOutAdj)
 		wHidden.Add(wHidden, &wHiddenAdj)
 		bOutput.Add(bOutput, bOutdAdj)
 		bHidden.Add(bHidden, bHiddenAdj)
 
-	}*/
+	}
 
 	nn.WHidden = wHidden
 	nn.BHidden = bHidden
