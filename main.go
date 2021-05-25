@@ -1,9 +1,7 @@
 package main
 
 import (
-	"log"
-
-	"github.com/Arturo0911/NN/model/settings"
+	"github.com/Arturo0911/NN/model/plotting"
 )
 
 // @author: Arturo Negreiros (AKA Pxyl0xd)
@@ -35,8 +33,10 @@ func main() {
 		panic(err)
 	}*/
 
-	if err := settings.MakingFiles("wineQualityReds.csv"); err != nil {
-		log.Fatal(err)
-	}
+	//if err := settings.MakingFiles("wineQualityReds.csv"); err != nil {
+	//	log.Fatal(err)
+	//}
+
+	plotting.CreatePloting("wineQualityReds.csv")
 
 }
