@@ -32,6 +32,7 @@ func main() {
 	if err = machine.RunAll(); err != nil {
 		log.Fatal(err)
 	}
+    fmt.Println("hi Arturo ")
 	fmt.Printf("%v\n\n", z.Value())
 
 }
